@@ -7,6 +7,9 @@ import { LoginComponent } from './login/login.component';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
 
+//SERVICES
+import { UserService} from './services/user.service';
+
 @NgModule({
   declarations: [
     AppComponent,
