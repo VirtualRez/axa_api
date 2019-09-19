@@ -31,12 +31,31 @@ app.use(bodyParser.json());
 var client = "http://www.mocky.io/v2/5808862710000087232b75ac"
 var policies = "http://www.mocky.io/v2/580891a4100000e8242b75c5"
 
-app.get('/gClient', (req, response) => {//json Client
+app.get('/api/Client', verifyToken, (req, response) => {//json Client
     request.get(client, (err, res, body) => { response.send(body) })
 });
 
-app.get('/gPolicies', (req, response) => {//json Policies
-    request.get(policies, (err, res, body) => { response.send(body) })
+app.get('/api/policies/:email', verifyToken, (req, response) => {//json Policies
+    console.log(req.params.email);
+
+    jwt.verify(req.token, 'secret', function (err, decoded) {
+        if (err) {
+            response.send('Token fail validation')
+        } else {
+            request.get(policies, (err, res, body) => {
+                var data = JSON.parse(body);
+
+
+                var dataParsed = data.policies;
+                var resultPolicies = dataParsed.find(element =>{ return element.email === req.params.email });
+                console.log(resultPolicies);
+                response.send(resultPolicies)
+            })
+
+        }
+
+    })
+
 });
 
 app.post('/login', (req, response) => {//login
@@ -47,23 +66,42 @@ app.post('/login', (req, response) => {//login
 
         if (resultado.length == 0) {
 
-
-
             response.status(403).send("The user doesn't exist.");
-        } else if(resultado[0].role == 'user'){
 
-           var token = jwt.sign({ email: req.body.email }, 'secret')
-           
-            response.send({user:token});
+        } else if (resultado[0].role == 'user') {
 
-        } else{
             var token = jwt.sign({ email: req.body.email }, 'secret')
 
-            response.send({admin:token});
+            response.send({ user: token });
+
+        } else {
+            var token = jwt.sign({ email: req.body.email }, 'secret')
+
+            response.send({ admin: token });
         }
     });
 });
 
+//Token verification
+function verifyToken(req, res, next) {
+
+    const bearerHeader = req.headers['authorization'];
+
+    if (typeof bearerHeader !== 'undefined') {
+
+        const bearer = bearerHeader.split(' ');
+
+        const bearerToken = bearer[1];
+
+        req.token = bearerToken;
+
+        next();//jump to the next function
+    } else {
+
+        res.sendStatus(403);
+    }
+
+}
 
 
 
