@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var fs = require('fs');
 //var process = require('process');
 var bcrypt = require('bcrypt'); //crypt passwords
-var jsonwebtoken = require('jsonwebtoken'); //make tokens
+var jwt = require('jsonwebtoken'); //make tokens
 var expressjwt = require('express-jwt'); //headers tokens
 //REQUEST
 const request = require('request');
@@ -42,16 +42,24 @@ app.get('/gPolicies', (req, response) => {//json Policies
 app.post('/login', (req, response) => {//login
     request.get(client, (err, res, body) => {
         var data = JSON.parse(body);
-        var resultado = data.clients.filter(element => element.email === req.body.msg);
+        var resultado = data.clients.filter(element => element.email === req.body.email);
         console.log(resultado);
 
         if (resultado.length == 0) {
 
 
 
-            response.send("No existe usuario");
-        } else {
-            response.send("Bienvenido");
+            response.status(403).send("The user doesn't exist.");
+        } else if(resultado[0].role == 'user'){
+
+           var token = jwt.sign({ email: req.body.email }, 'secret')
+           
+            response.send({user:token});
+
+        } else{
+            var token = jwt.sign({ email: req.body.email }, 'secret')
+
+            response.send({admin:token});
         }
     });
 });
