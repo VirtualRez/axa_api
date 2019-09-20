@@ -35,6 +35,47 @@ app.get('/api/Client', verifyToken, (req, response) => {//json Client
     request.get(client, (err, res, body) => { response.send(body) })
 });
 
+//USER SEARCH
+app.get('/api/username/:userName', verifyToken, (req, response) => {
+    jwt.verify(req.token, 'secret', function (err, decoded) {
+        if (err) {
+            response.send('Token fail validation')
+        } else {
+            let clientName = req.params.userName;
+            request.get(client, (err, res, body) => {
+                var data = JSON.parse(body);
+                var dataParsed = data.clients;
+                var resultInfoUser = dataParsed.find(element => { return element.name === clientName });
+                if(typeof resultInfoUser != "object"){
+                    response.send("Name doesn't exist.")
+                } else {
+                response.send(resultInfoUser);
+            }
+            })
+        }
+    })
+})
+
+app.get('/api/userid/:userId', verifyToken, (req, response) => {
+    jwt.verify(req.token, 'secret', function (err, decoded) {
+        if (err) {
+            response.send('Token fail validation')
+        } else {
+            let clientId = req.params.userId;
+            request.get(client, (err, res, body) => {
+                var data = JSON.parse(body);
+                var dataParsed = data.clients;
+                var resultInfoUser = dataParsed.find(element => { return element.id === clientId });
+                if(typeof resultInfoUser != "object"){
+                    response.send("ID doesn't match.")
+                } else {
+                response.send(resultInfoUser);
+            }
+            })
+        }
+    })
+})
+
 //ADMIN SEARCH
 app.get('/api/admin/policies/:name', verifyToken, (req, response) => {//Policies associates to user name
     jwt.verify(req.token, 'secret', function (err, decoded) {
@@ -79,13 +120,14 @@ app.get('/api/admin/user/:policy', verifyToken, (req, response) => {//Admin send
                 if (typeof resultPolicies != "object") {//control error
                     response.send("This policies doesn't exist.")
                 } else {
-                var userData = resultPolicies.clientId;
-                request.get(client, (err, res, body) => {
-                    var data = JSON.parse(body);
-                    var dataParsed = data.clients;
-                    var resultClient = dataParsed.find(element => { return element.id === userData });
-                    response.send(resultClient)   
-                })}
+                    var userData = resultPolicies.clientId;
+                    request.get(client, (err, res, body) => {
+                        var data = JSON.parse(body);
+                        var dataParsed = data.clients;
+                        var resultClient = dataParsed.find(element => { return element.id === userData });
+                        response.send(resultClient)
+                    })
+                }
             })
         }
     })
@@ -96,20 +138,13 @@ app.post('/login', (req, response) => {//login
         var data = JSON.parse(body);
         var resultado = data.clients.filter(element => element.email === req.body.email);
         console.log(resultado);
-
         if (resultado.length == 0) {
-
             response.status(403).send("The user doesn't exist.");
-
         } else if (resultado[0].role == 'user') {
-
             var token = jwt.sign({ email: req.body.email }, 'secret')
-
             response.send({ user: token });
-
         } else {
             var token = jwt.sign({ email: req.body.email }, 'secret')
-
             response.send({ admin: token });
         }
     });
@@ -117,23 +152,15 @@ app.post('/login', (req, response) => {//login
 
 //TOKEN VERIFICATION
 function verifyToken(req, res, next) {
-
     const bearerHeader = req.headers['authorization'];
-
     if (typeof bearerHeader !== 'undefined') {
-
         const bearer = bearerHeader.split(' ');
-
         const bearerToken = bearer[1];
-
         req.token = bearerToken;
-
         next();//jump to the next function
     } else {
-
         res.sendStatus(403);
     }
-
 }
 
 
