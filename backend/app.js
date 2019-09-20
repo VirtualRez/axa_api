@@ -35,27 +35,51 @@ app.get('/api/Client', verifyToken, (req, response) => {//json Client
     request.get(client, (err, res, body) => { response.send(body) })
 });
 
-app.get('/api/policies/:email', verifyToken, (req, response) => {//json Policies
-    console.log(req.params.email);
-
+//ADMIN SEARCH
+app.get('/api/admin/policies/:name', verifyToken, (req, response) => {//Policies associates to user name
     jwt.verify(req.token, 'secret', function (err, decoded) {
         if (err) {
             response.send('Token fail validation')
         } else {
-            request.get(policies, (err, res, body) => {
+            request.get(client, (err, res, body) => {
                 var data = JSON.parse(body);
-
-
-                var dataParsed = data.policies;
-                var resultPolicies = dataParsed.find(element =>{ return element.email === req.params.email });
-                console.log(resultPolicies);
-                response.send(resultPolicies)
+                var dataParsed = data.clients;
+                var resultInfoClient = dataParsed.find(element => { return element.name === req.params.name });
+                var idClient = resultInfoClient.id;
+                request.get(policies, (err, res, body)=>{
+                    var data = JSON.parse(body);
+                    var dataParsed = data.policies;
+                    var resultPoliciesByID = dataParsed.filter(element => { return element.clientId === idClient });
+                    response.send(resultPoliciesByID)
+                })
             })
 
         }
 
     })
 
+});
+
+app.get('/api/admin/user/:policy', verifyToken, (req, response) => {//Admin send the policy number and we return user info.
+    jwt.verify(req.token, 'secret', function (err, decoded) {
+        if (err) {
+            response.send('Token fail validation')
+        } else {
+            let policyId = req.params.policy;
+            request.get(policies, (err, res, body) => {
+                var data = JSON.parse(body);
+                var dataParsed = data.policies;
+                var resultPolicies = dataParsed.find(element => { return element.id === policyId });
+                var userData = resultPolicies.clientId;
+                request.get(client, (err, res, body) => {
+                    var data = JSON.parse(body);
+                    var dataParsed = data.clients;
+                    var resultClient = dataParsed.find(element => { return element.id === userData });
+                    response.send(resultClient)
+                })
+            })
+        }
+    })
 });
 
 app.post('/login', (req, response) => {//login
@@ -82,7 +106,7 @@ app.post('/login', (req, response) => {//login
     });
 });
 
-//Token verification
+//TOKEN VERIFICATION
 function verifyToken(req, res, next) {
 
     const bearerHeader = req.headers['authorization'];
