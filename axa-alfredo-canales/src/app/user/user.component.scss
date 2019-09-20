@@ -1,0 +1,13 @@
+.square {
+height: 100vh;
+width: 100vh;
+display:flex;
+justify-content: center;
+}
+
+.button {
+    height: 350px;
+    border: 1px solid black;
+    width: 100%;
+    justify-content: space-around;
+}

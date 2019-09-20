@@ -40,11 +40,11 @@ app.get('/api/username/:userName', verifyToken, (req, response) => {
                 var data = JSON.parse(body);
                 var dataParsed = data.clients;
                 var resultInfoUser = dataParsed.find(element => { return element.name === clientName });
-                if(typeof resultInfoUser != "object"){
+                if (typeof resultInfoUser != "object") {
                     response.send("Name doesn't exist.")
                 } else {
-                response.send(resultInfoUser);
-            }
+                    response.send(resultInfoUser);
+                }
             })
         }
     })
@@ -60,11 +60,11 @@ app.get('/api/userid/:userId', verifyToken, (req, response) => {
                 var data = JSON.parse(body);
                 var dataParsed = data.clients;
                 var resultInfoUser = dataParsed.find(element => { return element.id === clientId });
-                if(typeof resultInfoUser != "object"){
-                    response.send("ID doesn't match.")
+                if (typeof resultInfoUser != "object") {
+                    response.send({ message: "ID doesn't match." })
                 } else {
-                response.send(resultInfoUser);
-            }
+                    response.send(resultInfoUser);
+                }
             })
         }
     })
@@ -127,13 +127,14 @@ app.get('/api/admin/user/:policy', verifyToken, (req, response) => {//Admin send
     })
 });
 
-app.post('/login', (req, response) => {//login
+//LOGIN
+app.post('/login', (req, response) => {
     request.get(client, (err, res, body) => {
         var data = JSON.parse(body);
         var resultado = data.clients.filter(element => element.email === req.body.email);
         console.log(resultado);
         if (resultado.length == 0) {
-            response.status(403).send("The user doesn't exist.");
+            response.send({ message: "The user doesn't exist." });
         } else if (resultado[0].role == 'user') {
             var token = jwt.sign({ email: req.body.email }, 'secret')
             response.send({ user: token });
