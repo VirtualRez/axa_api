@@ -4,7 +4,6 @@ var cors = require('cors'); //cors problems
 var bodyParser = require('body-parser');
 var fs = require('fs');
 //var process = require('process');
-var bcrypt = require('bcrypt'); //crypt passwords
 var jwt = require('jsonwebtoken'); //make tokens
 var expressjwt = require('express-jwt'); //headers tokens
 //REQUEST
@@ -21,11 +20,6 @@ var app = express();
 //MIDDLEWARES
 app.use(cors());
 app.use(bodyParser.json());
-//app.use(expressjwt({
-//   secret: miClave
-// }).unless({
-//   path: ["/login", "/register"]
-// })); //comrpueba que el token esté en nuestros path escepto en login y register
 
 //API AXA
 var client = "http://www.mocky.io/v2/5808862710000087232b75ac"
