@@ -1,4 +1,4 @@
-//IMPORTS //
+//IMPORTS
 var express = require('express');
 var cors = require('cors'); //cors problems
 var bodyParser = require('body-parser');
