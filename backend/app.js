@@ -45,19 +45,25 @@ app.get('/api/admin/policies/:name', verifyToken, (req, response) => {//Policies
                 var data = JSON.parse(body);
                 var dataParsed = data.clients;
                 var resultInfoClient = dataParsed.find(element => { return element.name === req.params.name });
-                var idClient = resultInfoClient.id;
-                request.get(policies, (err, res, body)=>{
-                    var data = JSON.parse(body);
-                    var dataParsed = data.policies;
-                    var resultPoliciesByID = dataParsed.filter(element => { return element.clientId === idClient });
-                    response.send(resultPoliciesByID)
-                })
+                if (typeof resultInfoClient != "object") {//control error
+                    response.send("This user doesn't exist.")
+                } else {
+                    var idClient = resultInfoClient.id;
+                    request.get(policies, (err, res, body) => {
+                        var data = JSON.parse(body);
+                        var dataParsed = data.policies;
+                        var resultPoliciesByID = dataParsed.filter(element => { return element.clientId === idClient });
+                        if (resultPoliciesByID.length == 0) {
+                            response.send("This user doesn't have any policies.")
+                        } else {
+                            response.send(resultPoliciesByID)
+                        }
+                    })
+
+                }
             })
-
         }
-
     })
-
 });
 
 app.get('/api/admin/user/:policy', verifyToken, (req, response) => {//Admin send the policy number and we return user info.
@@ -70,13 +76,16 @@ app.get('/api/admin/user/:policy', verifyToken, (req, response) => {//Admin send
                 var data = JSON.parse(body);
                 var dataParsed = data.policies;
                 var resultPolicies = dataParsed.find(element => { return element.id === policyId });
+                if (typeof resultPolicies != "object") {//control error
+                    response.send("This policies doesn't exist.")
+                } else {
                 var userData = resultPolicies.clientId;
                 request.get(client, (err, res, body) => {
                     var data = JSON.parse(body);
                     var dataParsed = data.clients;
                     var resultClient = dataParsed.find(element => { return element.id === userData });
-                    response.send(resultClient)
-                })
+                    response.send(resultClient)   
+                })}
             })
         }
     })
