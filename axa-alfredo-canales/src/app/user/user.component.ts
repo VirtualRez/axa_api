@@ -9,14 +9,19 @@ import { HttpClient } from '@angular/common/http';
 export class UserComponent implements OnInit {
 userID : string;
 userName : string;
+data : any;
 
-searchUserID(){
-if(userID.lenght == 0){
+searchUserID(){//////////ESTAMOS AQUÍ, TENEMOS QUE METER EL TOKEN
+if(this.userID.length == 0){
   return;
 }else{
   this._http.get(`http://localhost:3000/api/userid/${this.userID}`)
   .subscribe(apiResult =>{
-    if(userData == )
+    this.data = apiResult;
+    if(this.data.message == "Ok" ){
+     console.log(this.data);
+     
+    }
   })
 }
 }

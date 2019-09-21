@@ -63,6 +63,7 @@ app.get('/api/userid/:userId', verifyToken, (req, response) => {
                 if (typeof resultInfoUser != "object") {
                     response.send({ message: "ID doesn't match." })
                 } else {
+                    resultInfoUser.message = "Ok";
                     response.send(resultInfoUser);
                 }
             })
@@ -132,15 +133,15 @@ app.post('/login', (req, response) => {
     request.get(client, (err, res, body) => {
         var data = JSON.parse(body);
         var resultado = data.clients.filter(element => element.email === req.body.email);
-        console.log(resultado);
+        console.log(resultado,req.body);
         if (resultado.length == 0) {
             response.send({ message: "The user doesn't exist." });
         } else if (resultado[0].role == 'user') {
             var token = jwt.sign({ email: req.body.email }, 'secret')
-            response.send({ user: token });
+            response.send({ message:"ok",token: token, role:"user" });
         } else {
             var token = jwt.sign({ email: req.body.email }, 'secret')
-            response.send({ admin: token });
+            response.send({message:"ok", token: token, role:"admin"  });
         }
     });
 });

@@ -10,29 +10,45 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent implements OnInit {
   failed = false;
-  body = { email: "" }
+  body: Object = {};
+  apiResult;
+  mail: String = "";
+
+  Submit() {
+    this.body = { email: this.mail }
+    if (this.mail == "undefined") { return };
+    this._http.post('http://localhost:3000/login', this.body).subscribe(data => {
+      this.apiResult = data;
+      if (this.apiResult.message == "ok") {
+        switch (this.apiResult.role) {
+          case "admin":
+            localStorage.setItem('admin', `${this.apiResult.token}`)
+            this._router.navigateByUrl('/admin');
+            break;
+          case "user":
+            localStorage.setItem('user', `${this.apiResult.token}`)
+            this._router.navigateByUrl('/user');
+            break;
+          default:
+            return;
+        }
+      } else {
+        this.failed = true;
+        return;
+      }
+    });
+  }
+
+  reset() {
+    this.failed = false;
+  }
   constructor(private _http: HttpClient, private _user: UserService, private _router: Router) { }
 
   ngOnInit() {
   }
-  sendData() {
-    this._http.post("http://localhost:3000/login", this.body)
-      .subscribe(apiResult => {
-        if (Object.keys(apiResult)[0] == "admin") {
-          this._router.navigateByUrl('/admin')
-        } else if(Object.keys(apiResult)[0] == "user") {
-          this._router.navigateByUrl('/user')
-        }else{
-        this.failed = true;
-          return;
-        }
-      })
 
 
-
-  }
-
-   reset(){
-   this.failed=false;
-  }
 }
+
+
+
