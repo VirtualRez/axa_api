@@ -33,7 +33,7 @@ app.get('/api/Client', verifyToken, (req, response) => {//json Client
 app.get('/api/username/:userName', verifyToken, (req, response) => {
     jwt.verify(req.token, 'secret', function (err, decoded) {
         if (err) {
-            response.send('Token fail validation')
+            response.send({message:'Token fail validation'})
         } else {
             let clientName = req.params.userName;
             request.get(client, (err, res, body) => {
@@ -41,8 +41,9 @@ app.get('/api/username/:userName', verifyToken, (req, response) => {
                 var dataParsed = data.clients;
                 var resultInfoUser = dataParsed.find(element => { return element.name === clientName });
                 if (typeof resultInfoUser != "object") {
-                    response.send("Name doesn't exist.")
+                    response.send({message:"Name doesn't exist."})
                 } else {
+                    resultInfoUser.message = "Ok";
                     response.send(resultInfoUser);
                 }
             })

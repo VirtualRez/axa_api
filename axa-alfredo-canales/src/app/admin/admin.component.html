@@ -1,3 +1,19 @@
-<p>
-  admin works!
-</p>
+<div class="square">
+  <div class="button">
+    <input [(ngModel)]="userName" type="text" name="userName" placeholder="Name">
+    <button (click)="searchUserName()" class="btn btn-primary" >Search by
+      name</button>
+  </div>
+  <div class="button">
+    <input [(ngModel)]="userID" type="text" name="userID" placeholder="ID">
+    <button (click)="searchUserID()" class="btn btn-primary" >Search by ID</button>
+  </div>
+  <div class="button">
+    <input [(ngModel)]="userPols" type="text" name="userPols" placeholder="User Name">
+    <button (click)="seUspol()" class="btn btn-primary" >Search policies list</button>
+  </div>
+  <div class="button">
+    <input [(ngModel)]="policyId" type="text" name="policyId" placeholder="Policy ID">
+    <button (click)="seByPolId()" class="btn btn-primary" placeholder="ID">Search by policy ID</button>
+  </div>
+</div>
