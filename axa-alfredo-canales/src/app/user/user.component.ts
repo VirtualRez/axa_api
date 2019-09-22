@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
 
 @Component({
   selector: 'app-user',
@@ -10,60 +9,42 @@ import { Router } from '@angular/router';
 export class UserComponent implements OnInit {
   userID: string;
   userName: string;
-  data: any;
-  httpOptions: any;
-  token:string;
+  userExist = false;
+  user: any;
+  promiseVar;
 
-  setAuthHeader() {
-    return this.httpOptions = { headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}` }) }//Header application on angular7
-  };
-
-  searchUserID() {
-    if (this.userID == "undefined") {
-      return;
+  SearchUserName() {
+    if (this.userName == undefined) {//avoid error if you try to search if didn't write anything
+    return;
+  } else if (this.userName.length == 0) {//avoid error if you writed something, then you try to make a new search with no text
+    return;
     } else {
-      this._http.get(`http://localhost:3000/api/userid/${this.userID}`, this.setAuthHeader())
-        .subscribe(apiResult => {
-          this.data = apiResult;
-          if (this.data.message == "Ok") {
-            console.log(this.data);
-          }else{
-            console.log(this.data.message);
-            
-          }
-        })
-    }
+      this.user = this._user.searchUserName(this.userName)
+      setTimeout(() => {
+        this.promiseVar = this.user.__zone_symbol__value;
+        if(this.promiseVar.message =="Ok"){
+        this.userExist = true}
+      }, 1000)
   }
-
-  searchUserName() {
-    if (this.userName == "undefined") {
-      return;
-    } else {
-      this._http.get(`http://localhost:3000/api/username/${this.userName}`, this.setAuthHeader())
-        .subscribe(apiResult => {
-          this.data = apiResult;
-          if (this.data.message == "Ok") {
-            console.log(this.data);
-          }else{
-            console.log(this.data.message);
-            
-          }
-        })
-    }
   }
-
-  checkToken(){
-    if(localStorage.getItem('user') == null){
-     return false
+  SearchUserID() {
+    if (this.userID == undefined) {//avoid error if you try to search if didn't write anything
+    return;
+  } else if (this.userID.length == 0) {//avoid error if you writed something, then you try to make a new search with no text
+    return;
     }else{
-      this.token= localStorage.getItem('user')//set the token on local storage
-      return true
-    }
+      this.user = this._user.searchUserID(this.userID)
+      setTimeout(() => {
+        this.promiseVar = this.user.__zone_symbol__value;   
+        if(this.promiseVar.message =="Ok"){
+        this.userExist = true}
+      }, 1000)
   }
-  constructor(private _http: HttpClient, private _router: Router) { }
+  }
+  constructor(private _user: UserService) { }
 
   ngOnInit() {
-    this.checkToken();
+    this._user.checkToken();
   }
 
 }

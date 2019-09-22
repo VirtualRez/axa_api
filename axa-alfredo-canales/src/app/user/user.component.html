@@ -1,11 +1,21 @@
 <div class="square">
   <div class="button">
     <input [(ngModel)]="userName" type="text" name="userName">
-    <button (click)="searchUserName()" class="btn btn-primary" placeholder="Name">Search by
+    <button (click)="SearchUserName()" class="btn btn-primary" placeholder="Name">Search by
       name</button>
   </div>
   <div class="button">
     <input [(ngModel)]="userID" type="text" name="userID">
-    <button  (click)="searchUserID()" class="btn btn-primary" placeholder="ID">Search by ID</button>
+    <button (click)="SearchUserID()" class="btn btn-primary" placeholder="ID">Search by ID</button>
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="rBox" *ngIf="userExist">
+    {{promiseVar.id}} <br>
+    {{promiseVar.name}} <br>
+    {{promiseVar.role}} <br>
+    {{promiseVar.email}} <br>
   </div>
 </div>
