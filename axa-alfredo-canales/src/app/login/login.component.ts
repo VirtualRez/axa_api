@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -12,12 +12,26 @@ export class LoginComponent implements OnInit {
   mail: string = "";
   //FUNCTION
   callSubmit() {
-    this._user.Submit(this.mail) ? this.failed=true: this.failed =true;
+    if (this.mail == undefined) { this.failed = true; return; }
+    if (this.mail.length == 0) { this.failed = true; return; }
+    this._user.Submit(this.mail)
+    setTimeout(() => {
+      if (localStorage.getItem('user')) {
+        this._router.navigateByUrl('/user')
+      } else if (localStorage.getItem('admin')) {
+        this._router.navigateByUrl('/admin')
+      };
+    }, 1000)
   }
-  constructor(private _user: UserService) { }
-
+  reset() {
+    this.failed = false;
+    return
+  }
+  constructor(private _user: UserService, private _router: Router) { }
 
   ngOnInit() {
+    localStorage.removeItem('user');
+    localStorage.removeItem('admin');
   }
 
 

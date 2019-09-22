@@ -10,64 +10,37 @@ export class UserService {
   httpOptions
   body: Object = {};
   apiResult;
-  token: string;
+  token;
   data;
-  user;
-
-
+  
   //FUNCTIONS
   Submit(mail) {//Login
     this.body = { email: mail }
-    if (this.body['email'] == "undefined") {
-      return true;
-    };
+    
     this._http.post('http://localhost:3000/login', this.body).subscribe(data => {
       this.apiResult = data;
-      if (this.apiResult.message == "ok") {
+      if (this.apiResult.message == "Ok") {
         switch (this.apiResult.role) {
           case "admin":
             localStorage.setItem('admin', `${this.apiResult.token}`)
-            this._router.navigateByUrl('/admin');
             break;
           case "user":
             localStorage.setItem('user', `${this.apiResult.token}`)
-            this._router.navigateByUrl('/user');
             break;
           default:
             return;
         }
-      } else {
-        return true;
+      }else{
+        return;
       }
     });
   }
-  // reset() {//Cleaner
-  //   this.failed = false;
-  // }
   searchUserName(userName) {//user serch by name
-    if (userName == "undefined") {
-      return;
-    } else {
-      return this._http.get(`http://localhost:3000/api/userName/${userName}`, this.setAuthHeader())
-        .toPromise().then(resp => { return resp }).catch(err => { return err });
-    }
+    return this._http.get(`http://localhost:3000/api/userName/${userName}`, this.setAuthHeader())
   }
+
   searchUserID(userID) {
-    if (userID == "undefined") {
-      return;
-    } else {
-      return this._http.get(`http://localhost:3000/api/userid/${userID}`, this.setAuthHeader())
-        .toPromise().then(resp => { return resp }).catch(err => { return err });
-    }
-  }
-  //CHECK TOKEN IN LOCAL STORAGE
-  checkToken() {
-    if (localStorage.getItem('user') == null) {
-      return false
-    } else {
-      this.token = localStorage.getItem('user')//set the token on local storage
-      return true
-    }
+    return this._http.get(`http://localhost:3000/api/userid/${userID}`, this.setAuthHeader())
   }
   //HEADER AUTORIZATION 
   setAuthHeader() {

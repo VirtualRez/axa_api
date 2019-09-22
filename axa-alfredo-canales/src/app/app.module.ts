@@ -8,9 +8,10 @@ import { UserComponent } from './user/user.component';
 import { AdminComponent } from './admin/admin.component';
 import { FormsModule} from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthGuardGuard } from './auth-guard.guard';
 //SERVICES
 import { UserService} from './services/user.service';
-
+import {AuthServiceService} from './services/auth-service.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,7 @@ import { UserService} from './services/user.service';
     HttpClientModule
 
   ],
-  providers: [UserService],
+  providers: [UserService, AuthServiceService, AuthGuardGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

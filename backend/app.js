@@ -139,10 +139,10 @@ app.post('/login', (req, response) => {
             response.send({ message: "The user doesn't exist." });
         } else if (resultado[0].role == 'user') {
             var token = jwt.sign({ email: req.body.email }, 'secret')
-            response.send({ message: "ok", token: token, role: "user" });
+            response.send({ message: "Ok", token: token, role: "user" });
         } else {
             var token = jwt.sign({ email: req.body.email }, 'secret')
-            response.send({ message: "ok", token: token, role: "admin" });
+            response.send({ message: "Ok", token: token, role: "admin" });
         }
     });
 });
