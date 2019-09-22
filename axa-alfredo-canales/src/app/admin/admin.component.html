@@ -1,19 +1,59 @@
 <div class="square">
   <div class="button">
     <input [(ngModel)]="userName" type="text" name="userName" placeholder="Name">
-    <button (click)="searchUserName()" class="btn btn-primary" >Search by
+    <button (click)="searchUserName()" class="btn btn-primary">Search by
       name</button>
   </div>
   <div class="button">
     <input [(ngModel)]="userID" type="text" name="userID" placeholder="ID">
-    <button (click)="searchUserID()" class="btn btn-primary" >Search by ID</button>
+    <button (click)="searchUserID()" class="btn btn-primary">Search by ID</button>
   </div>
   <div class="button">
-    <input [(ngModel)]="userPols" type="text" name="userPols" placeholder="User Name">
-    <button (click)="seUspol()" class="btn btn-primary" >Search policies list</button>
+    <input [(ngModel)]="uPolicies" type="text" name="userPols" placeholder="User Name">
+    <button (click)="seUspol()" class="btn btn-primary">Search policies list</button>
   </div>
   <div class="button">
     <input [(ngModel)]="policyId" type="text" name="policyId" placeholder="Policy ID">
     <button (click)="seByPolId()" class="btn btn-primary" placeholder="ID">Search by policy ID</button>
+  </div>
+</div>
+<div class="container">
+  <div class="rBox" *ngIf="haveUser">
+    <p>
+      Name: {{user.name}}
+    </p>
+    <p>
+      ID: {{user.id}}
+    </p>
+    <p>
+      Role: {{user.role}}
+    </p>
+    <p>
+      Email: {{user.email}}
+    </p>
+  </div>
+
+  <div *ngIf="haveArray" class="policyList">
+    <div class="rBox" *ngFor="let element of arrayPol; index as i">
+
+      <p>
+        ID: {{element.id}}
+      </p>
+      <p>
+        Amount Insured: {{element.amountInsured}}
+      </p>
+      <p>
+        Email:{{element.clientId}}
+      </p>
+      <p>
+        Inception Date: {{element.inceptionDate}}
+      </p>
+      <p>
+        Installment Payment: {{element.installmentPayment}}
+      </p>
+      <p>
+        Client ID: {{element.clientId}}
+      </p>
+    </div>
   </div>
 </div>

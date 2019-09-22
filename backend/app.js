@@ -33,7 +33,7 @@ app.get('/api/Client', verifyToken, (req, response) => {//json Client
 app.get('/api/username/:userName', verifyToken, (req, response) => {
     jwt.verify(req.token, 'secret', function (err, decoded) {
         if (err) {
-            response.send({message:'Token fail validation'})
+            response.send({ message: 'Token fail validation' })
         } else {
             let clientName = req.params.userName;
             request.get(client, (err, res, body) => {
@@ -41,7 +41,7 @@ app.get('/api/username/:userName', verifyToken, (req, response) => {
                 var dataParsed = data.clients;
                 var resultInfoUser = dataParsed.find(element => { return element.name === clientName });
                 if (typeof resultInfoUser != "object") {
-                    response.send({message:"Name doesn't exist."})
+                    response.send({ message: "Name doesn't exist." })
                 } else {
                     resultInfoUser.message = "Ok";
                     response.send(resultInfoUser);
@@ -76,14 +76,14 @@ app.get('/api/userid/:userId', verifyToken, (req, response) => {
 app.get('/api/admin/policies/:name', verifyToken, (req, response) => {//Policies associates to user name
     jwt.verify(req.token, 'secret', function (err, decoded) {
         if (err) {
-            response.send('Token fail validation')
+            response.send({ message: 'Token fail validation' })
         } else {
             request.get(client, (err, res, body) => {
                 var data = JSON.parse(body);
                 var dataParsed = data.clients;
                 var resultInfoClient = dataParsed.find(element => { return element.name === req.params.name });
                 if (typeof resultInfoClient != "object") {//control error
-                    response.send("This user doesn't exist.")
+                    response.send({ message: "This user doesn't exist." })
                 } else {
                     var idClient = resultInfoClient.id;
                     request.get(policies, (err, res, body) => {
@@ -91,7 +91,7 @@ app.get('/api/admin/policies/:name', verifyToken, (req, response) => {//Policies
                         var dataParsed = data.policies;
                         var resultPoliciesByID = dataParsed.filter(element => { return element.clientId === idClient });
                         if (resultPoliciesByID.length == 0) {
-                            response.send("This user doesn't have any policies.")
+                            response.send({ message: "This user doesn't have any policies." })
                         } else {
                             response.send(resultPoliciesByID)
                         }
@@ -106,7 +106,7 @@ app.get('/api/admin/policies/:name', verifyToken, (req, response) => {//Policies
 app.get('/api/admin/user/:policy', verifyToken, (req, response) => {//Admin send the policy number and we return user info.
     jwt.verify(req.token, 'secret', function (err, decoded) {
         if (err) {
-            response.send('Token fail validation')
+            response.send({message:'Token fail validation'})
         } else {
             let policyId = req.params.policy;
             request.get(policies, (err, res, body) => {
@@ -114,7 +114,7 @@ app.get('/api/admin/user/:policy', verifyToken, (req, response) => {//Admin send
                 var dataParsed = data.policies;
                 var resultPolicies = dataParsed.find(element => { return element.id === policyId });
                 if (typeof resultPolicies != "object") {//control error
-                    response.send("This policies doesn't exist.")
+                    response.send({message:"This policies doesn't exist."})
                 } else {
                     var userData = resultPolicies.clientId;
                     request.get(client, (err, res, body) => {
@@ -134,15 +134,15 @@ app.post('/login', (req, response) => {
     request.get(client, (err, res, body) => {
         var data = JSON.parse(body);
         var resultado = data.clients.filter(element => element.email === req.body.email);
-        console.log(resultado,req.body);
+        console.log(resultado, req.body);
         if (resultado.length == 0) {
             response.send({ message: "The user doesn't exist." });
         } else if (resultado[0].role == 'user') {
             var token = jwt.sign({ email: req.body.email }, 'secret')
-            response.send({ message:"ok",token: token, role:"user" });
+            response.send({ message: "ok", token: token, role: "user" });
         } else {
             var token = jwt.sign({ email: req.body.email }, 'secret')
-            response.send({message:"ok", token: token, role:"admin"  });
+            response.send({ message: "ok", token: token, role: "admin" });
         }
     });
 });
