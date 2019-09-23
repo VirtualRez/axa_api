@@ -1,6 +1,5 @@
 # AXA API
 ### by Alfredo Canales
-* * *
 ```
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.
 Node.JS version 12.10.0.
@@ -29,11 +28,12 @@ Starting with a Login page, you need an email to be able to enter:
     -As Admin: manningblankenship@quotezart.com (or another one from the API)
 ```
 <img src="/axa-alfredo-canales/src/assets/axa_login.png"></img>
-
+```
 After you sign up you will be able to acces to admin's or user's information.
-
+```
 <img src="/axa-alfredo-canales/src/assets/axa_admin.png"></img>
 
 ## Further help
-
+```
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+```
