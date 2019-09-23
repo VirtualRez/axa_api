@@ -134,7 +134,6 @@ app.post('/login', (req, response) => {
     request.get(client, (err, res, body) => {
         var data = JSON.parse(body);
         var resultado = data.clients.filter(element => element.email === req.body.email);
-        console.log(resultado, req.body);
         if (resultado.length == 0) {
             response.send({ message: "The user doesn't exist." });
         } else if (resultado[0].role == 'user') {
