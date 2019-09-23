@@ -18,7 +18,10 @@ export class AdminComponent implements OnInit {
   data: any;
   httpOptions;
   arrayPol;
-  failed= false;
+  fail1= false;
+  fail2= false;
+  fail3= false;
+  fail4= false;
   setAuthHeader() {
     return this.httpOptions = { headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}` }) }
   };
@@ -37,7 +40,7 @@ export class AdminComponent implements OnInit {
             this.user = this.data;
             this.haveUser = true;
           } else {
-            console.log(this.data.message)
+            this.fail1= true;
           }
         });
     }
@@ -57,7 +60,7 @@ export class AdminComponent implements OnInit {
             this.user = this.data;
             this.haveUser = true;
           } else {
-            console.log(this.data.message)
+            this.fail2= true;
           }
         })
     }
@@ -77,7 +80,7 @@ export class AdminComponent implements OnInit {
             this.arrayPol = this.data;
             this.haveArray = true;
           } else {
-            console.log(this.data.message)//return array
+            this.fail3= true;
           }
         })
     }
@@ -96,7 +99,7 @@ export class AdminComponent implements OnInit {
             this.user = result;
             this.haveUser = true;
           } else {
-            console.log(this.data.message)
+            this.fail4= true;
           }
         })
     }
@@ -111,7 +114,13 @@ export class AdminComponent implements OnInit {
       return true
     }
   }
-
+  reset() {
+    this.fail1= false;
+    this.fail2= false;
+    this.fail3= false;
+    this.fail4= false;
+    return;
+  }
   constructor(private _http: HttpClient) {
     if (this.uPolicies == undefined) {
       return;

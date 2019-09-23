@@ -1,22 +1,22 @@
-
-
 <div class="global">
   <div class="button">
-    <input [(ngModel)]="userName" type="text" name="userName" placeholder="User Name">
-  <p *ngIf="failed" style="color: #e11721">This Name doesn't exist.</p>
-   
+    <input (keypress)="reset()" [(ngModel)]="userName" type="text" name="userName" placeholder="User Name">
+    <p *ngIf="fail1" style="color: #e11721">This Name doesn't exist.</p>
     <button (click)="searchUserName()" class="btn btn-primary">Search by Name</button>
   </div>
   <div class="button">
-    <input [(ngModel)]="userID" type="text" name="userID" placeholder="User ID">
+    <input (keypress)="reset()" [(ngModel)]="userID" type="text" name="userID" placeholder="User ID">
+    <p *ngIf="fail2" style="color: #e11721">This ID doesn't exist.</p>
     <button (click)="searchUserID()" class="btn btn-primary">Search by ID</button>
   </div>
   <div class="button">
-    <input [(ngModel)]="uPolicies" type="text" name="userPols" placeholder="User Name">
+    <input (keypress)="reset()" [(ngModel)]="uPolicies" type="text" name="userPols" placeholder="User Name">
+    <p *ngIf="fail3" style="color: #e11721">This Name doesn't exist.</p>
     <button (click)="seUspol()" class="btn btn-primary">Search Policies list </button>
   </div>
   <div class="button">
-    <input [(ngModel)]="policyId" type="text" name="policyId" placeholder="Policy ID">
+    <input (keypress)="reset()" [(ngModel)]="policyId" type="text" name="policyId" placeholder="Policy ID">
+    <p *ngIf="fail4" style="color: #e11721">This Policy ID doesn't exist.</p>
     <button (click)="seByPolId()" class="btn btn-primary">Search by Policy ID</button>
   </div>
 </div>
