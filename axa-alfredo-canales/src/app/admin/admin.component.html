@@ -22,20 +22,20 @@
 </div>
 <div class=results>
   <div *ngIf="haveUser" class="usInfo">
-    <p>ID: {{user.id}} </p>
-    <p>Name: {{user.name}} </p>
-    <p>Role: {{user.role}} </p>
-    <p>Email: {{user.email}} </p>
+      <p><b>ID:</b> {{user.id}} </p>
+      <p><b>Name:</b> {{user.name}} </p>
+      <p><b>Role:</b> {{user.role}} </p>
+      <p><b>Email:</b> {{user.email}} </p>
   </div>
 
   <div *ngIf="haveArray" class="polList">
     <div class="resultPol" *ngFor="let element of arrayPol; index as i">
-      <p>Email: {{element.email}}</p>
-      <p>Policy ID: {{element.id}}</p>
-      <p>Client ID: {{element.clientId}}</p>
-      <p>Amount Insured :{{element.amountInsured}}</p>
-      <p>Inception Date: {{element.inceptionDate}}</p>
-      <p>Installment Payment: {{element.installmentPayment}}</p>
+      <p><b>Email:</b> {{element.email}}</p>
+      <p><b>Policy ID:</b> {{element.id}}</p>
+      <p><b>Client ID:</b> {{element.clientId}}</p>
+      <p><b>Amount Insured:</b> {{element.amountInsured}}</p>
+      <p><b>Inception Date:</b> {{element.inceptionDate}}</p>
+      <p><b>Installment Payment:</b> {{element.installmentPayment}}</p>
     </div>
   </div>
 </div>

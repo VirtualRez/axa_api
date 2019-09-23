@@ -1,21 +1,17 @@
-body{
-    margin: 8px;
-    background-color: #ffffff;
-    width: 100vw;
-    height: 100vh;
-    
+b{
+    font-weight: 600;
 }
 button{
     padding: 8px 8px;
     border-radius: 5px;
     border: none;
-    
 }
 input{
     text-align: center;
     border-radius: 5px;
 }
 .global{
+    top: 60px;
     display:flex;
     width:100vw;
     justify-content: space-around;
@@ -28,8 +24,8 @@ input{
     border-radius: 5px;
     background-color: #f2f2f2;
     padding: 20px;
-    margin-top: 10  0px!important;
-    box-shadow: 0 0 5px#D3D3D3; 
+    margin-top: 60px!important;
+    box-shadow: 0 0 5px 0.5px #D3D3D3; 
 }
 
 .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
@@ -38,20 +34,35 @@ input{
 label,input,button{
     margin: 6px 0;
 }
-.resultPol{
-    margin: 6px;
+.polList{
+    margin: 0px 60px;
     display: grid;
     max-width: 450px;
-    height: 500px;
+    height: 260px;
+    padding: 14px;
     overflow: auto;
-    border:1px solid black;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    box-shadow: 0 0 5px 0.5px #D3D3D3;
 }
 .resultPol{
     margin: 6px;
+    border-bottom: 1px dashed grey;
 }
 .results{
-    margin: 6px;
+    margin-top: 10px;
     display: grid;
     height: 600px;
+    justify-content: center;
 }
 
+.usInfo{
+    margin: 40px 90px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    box-shadow: 0 0 5px 0.5px #D3D3D3;
+    height: 180px;
+    width: 375px;
+    padding: 14px;
+    display: grid;
+}

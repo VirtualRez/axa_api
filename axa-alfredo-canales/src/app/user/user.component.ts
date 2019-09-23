@@ -40,6 +40,8 @@ export class UserComponent implements OnInit {
     } else {
       this._user.searchUserID(this.userID)
       .subscribe(res => {
+        console.log(res);
+        
         if (res['message'] !== 'Ok') {
           this.failedId = true;
         } else {

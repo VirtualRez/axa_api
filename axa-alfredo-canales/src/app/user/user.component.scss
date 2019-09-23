@@ -1,26 +1,46 @@
-//CLASS
-.button {
-    height: 350px;
-    border: 1px solid black;
-    width: 100%;
-    justify-content: space-around;
+b{
+    font-weight: 600;
+}
+button{
+    padding: 8px 8px;
+    border-radius: 5px;
+    border: none;
+}
+input{
+    text-align: center;
+    border-radius: 5px;
+}
+.button{
+    width: 250px;
+    display: grid;
+    justify-content: center;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    padding: 20px;
+    margin-top: 60px!important;
+    box-shadow: 0 0 5px 0.5px #D3D3D3; 
 }
 .global{
-    display: grid;
+    top: 60px;
+    display:flex;
+    width:100vw;
+    justify-content: space-around;
+    background: #ffffff;
 }
 
-.square {
-    height: 100vh;
-    width: 100vh;
-    display: flex;
-    justify-content: center;
-}    
-
-.rBox{
-    margin:6px;
+.info{
+    margin-top: 10px;
     display: grid;
-    max-width: 450px;
-    height: 500px;
-    overflow: auto;
-    border: 1px solid black;
+    height: 600px;
+    justify-content: center;
+}
+.rBox{
+    margin: 40px 90px;
+    border-radius: 5px;
+    background-color: #f2f2f2;
+    box-shadow: 0 0 5px 0.5px #D3D3D3;
+    height: 180px;
+    width: 375px;
+    padding: 40px 14px;
+    display: inline-table;
 }
