@@ -1,12 +1,14 @@
 <div class="square">
   <div class="button">
-    <input [(ngModel)]="userName" type="text" name="userName">
+    <input (keypress)="reset()" [(ngModel)]="userName" type="text" name="userName">
     <button (click)="SearchUserName()" class="btn btn-primary" placeholder="Name">Search by
       name</button>
+      <p *ngIf="failedUser">User name doesn't exist</p>
   </div>
   <div class="button">
-    <input [(ngModel)]="userID" type="text" name="userID">
+    <input (keypress)="reset()" [(ngModel)]="userID" type="text" name="userID">
     <button (click)="SearchUserID()" class="btn btn-primary" placeholder="ID">Search by ID</button>
+    <p *ngIf="failedId">User ID doesn't exist</p>
   </div>
 </div>
 

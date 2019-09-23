@@ -4,11 +4,15 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class AuthServiceService {
-  token;
-
+ 
   islogged() {
-    if (localStorage.getItem('user') || localStorage.getItem('admin') !== null) {
+    if (localStorage.getItem('user') !== null) {
       return true;
+    }
+  }
+  isAdmin() {
+    if (localStorage.getItem('admin') !== null) {
+      return true
     }
   }
 

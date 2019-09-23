@@ -26,39 +26,40 @@ export class AdminComponent implements OnInit {
   searchUserName() {
 
     if (this.userName == undefined) {//solve error if you try to search if didn't write anything
-    return;
-  } else if (this.userName.length == 0) {//solve error if you writed something, then you try to make a new search with no text
-    return;
-  } else  {
-      this._http.get(`http://localhost:3000/api/userName/${this.userName}`, this.setAuthHeader()).subscribe(result => {
-        this.data = result
-        if (this.data.message == "Ok") {
-          this.user = this.data;
-          this.haveUser = true;
-        } else {
-          console.log(this.data.message)
-        }
-      });
-
+      return;
+    } else if (this.userName.length == 0) {//solve error if you writed something, then you try to make a new search with no text
+      return;
+    } else {
+      this._http.get(`http://localhost:3000/api/userName/${this.userName}`, this.setAuthHeader())
+        .subscribe(result => {
+          this.data = result
+          if (this.data.message == "Ok") {
+            this.user = this.data;
+            this.haveUser = true;
+          } else {
+            console.log(this.data.message)
+          }
+        });
     }
   }
 
   searchUserID() {
     if (this.userID == undefined) {//solve error if you try to search if didn't write anything
-    return;
-  } else if (this.userID.length == 0) {//solve error if you writed something, then you try to make a new search with no text
-    return;
-  } else  {
+      return;
+    } else if (this.userID.length == 0) {//solve error if you writed something, then you try to make a new search with no text
+      return;
+    } else {
 
-      this._http.get(`http://localhost:3000/api/userID/${this.userID}`, this.setAuthHeader()).subscribe(result => {
-        this.data = result;
-        if (this.data.message == "Ok") {
-          this.user = this.data;
-          this.haveUser = true;
-        } else {
-          console.log(this.data.message)
-        }
-      })
+      this._http.get(`http://localhost:3000/api/userID/${this.userID}`, this.setAuthHeader())
+        .subscribe(result => {
+          this.data = result;
+          if (this.data.message == "Ok") {
+            this.user = this.data;
+            this.haveUser = true;
+          } else {
+            console.log(this.data.message)
+          }
+        })
     }
 
   }
@@ -84,10 +85,10 @@ export class AdminComponent implements OnInit {
 
   seByPolId() {
     if (this.policyId == undefined) {//solve error if you try to search if didn't write anything
-    return;
-  } else if (this.policyId.length == 0) {//solve error if you writed something, then you try to make a new search with no text
-    return;
-  } else {
+      return;
+    } else if (this.policyId.length == 0) {//solve error if you writed something, then you try to make a new search with no text
+      return;
+    } else {
       this._http.get(`http://localhost:3000/api/admin/user/${this.policyId}`, this.setAuthHeader())
         .subscribe(result => {
           this.data = result;

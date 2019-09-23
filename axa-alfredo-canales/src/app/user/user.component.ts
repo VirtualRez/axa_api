@@ -12,6 +12,8 @@ export class UserComponent implements OnInit {
   userExist = false;
   user: any;
   promiseVar;
+  failedUser = false;
+  failedId = false;
 
   SearchUserName() {
     if (this.userName == undefined) {//avoid error if you try to search if didn't write anything
@@ -20,7 +22,14 @@ export class UserComponent implements OnInit {
       return;
     } else {
       this.user = this._user.searchUserName(this.userName)
-        .subscribe(res => { this.promiseVar = res; if (this.promiseVar.message == "Ok") this.userExist = true })
+        .subscribe(res => {
+          if (res['message'] !== 'Ok') {
+            this.failedUser = true;
+          } else {
+            this.promiseVar = res;
+            this.userExist = true;
+          }
+        })
     }
   }
   SearchUserID() {
@@ -30,13 +39,24 @@ export class UserComponent implements OnInit {
       return;
     } else {
       this._user.searchUserID(this.userID)
-        .subscribe(res => { this.promiseVar = res; if (this.promiseVar.message == "Ok") this.userExist = true })
+      .subscribe(res => {
+        if (res['message'] !== 'Ok') {
+          this.failedId = true;
+        } else {
+          this.promiseVar = res;
+          this.userExist = true;
+        }
+      })
     }
+  }
+  reset(){
+    this.failedId=false;
+    this.failedUser=false;
   }
   constructor(private _user: UserService) { }
 
   ngOnInit() {
- 
+
   }
 
 }

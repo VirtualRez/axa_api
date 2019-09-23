@@ -14,18 +14,32 @@ export class LoginComponent implements OnInit {
   callSubmit() {
     if (this.mail == undefined) { this.failed = true; return; }
     if (this.mail.length == 0) { this.failed = true; return; }
+
     this._user.Submit(this.mail)
-    setTimeout(() => {
-      if (localStorage.getItem('user')) {
-        this._router.navigateByUrl('/user')
-      } else if (localStorage.getItem('admin')) {
-        this._router.navigateByUrl('/admin')
-      };
-    }, 1000)
-  }
+    .subscribe(data=> {
+      if (data['message']=="Ok"){
+        switch(data['role']){
+          
+            case "admin":
+              localStorage.setItem('admin', `${data['token']}`)
+              this._router.navigateByUrl('/admin')
+              break;
+            case "user":
+              localStorage.setItem('user', `${data['token']}`)
+              this._router.navigateByUrl('/user')
+              break;
+            default:
+              return;
+          }
+        }else{
+          this.failed=true;
+        }
+      
+  });
+}
   reset() {
     this.failed = false;
-    return
+    return;
   }
   constructor(private _user: UserService, private _router: Router) { }
 
