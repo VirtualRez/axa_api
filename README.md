@@ -27,11 +27,11 @@ I have made an AXA API SPA.
 Starting with a Login page, you need an email to be able to enter:
     -As User: barnettblankenship@quotezart.com (or another one from the API)
     -As Admin: manningblankenship@quotezart.com (or another one from the API)
-<img src="/src/assets/axa_login.png"></img>
+<img src="/axa-alfredo-canales/src/assets/axa_login.png"></img>
 
 After you sign up you will be able to acces to admin's or user's information.
 
-<img src="/src/assets/axa_admin.png"></img>
+<img src="/axa-alfredo-canales/src/assets/axa_admin.png"></img>
 
 ## Further help
 
