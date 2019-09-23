@@ -6,7 +6,9 @@
         -ms-user-select: none;
         user-select: none;
       }
-
+      .btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+        background-color: #00008f !important;
+    }
       @media (min-width: 768px) {
         .bd-placeholder-img-lg {
           font-size: 3.5rem;

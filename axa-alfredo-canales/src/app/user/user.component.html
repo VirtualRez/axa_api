@@ -1,9 +1,10 @@
+<div class="global">
 <div class="square">
   <div class="button">
     <input (keypress)="reset()" [(ngModel)]="userName" type="text" name="userName">
     <button (click)="SearchUserName()" class="btn btn-primary" placeholder="Name">Search by
       name</button>
-      <p *ngIf="failedUser">User name doesn't exist</p>
+    <p *ngIf="failedUser">User name doesn't exist</p>
   </div>
   <div class="button">
     <input (keypress)="reset()" [(ngModel)]="userID" type="text" name="userID">
@@ -12,7 +13,9 @@
   </div>
 </div>
 
-<div class="container">
+
+</div>
+<div class="infoUser">
 
   <div class="rBox" *ngIf="userExist">
     {{promiseVar.id}} <br>
@@ -20,4 +23,4 @@
     {{promiseVar.role}} <br>
     {{promiseVar.email}} <br>
   </div>
-</div>
+  </div>

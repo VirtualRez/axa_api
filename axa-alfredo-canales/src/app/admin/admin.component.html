@@ -1,59 +1,41 @@
-<div class="square">
+
+
+<div class="global">
   <div class="button">
-    <input [(ngModel)]="userName" type="text" name="userName" placeholder="Name">
-    <button (click)="searchUserName()" class="btn btn-primary">Search by
-      name</button>
+    <input [(ngModel)]="userName" type="text" name="userName" placeholder="User Name">
+  <p *ngIf="failed" style="color: #e11721">This Name doesn't exist.</p>
+   
+    <button (click)="searchUserName()" class="btn btn-primary">Search by Name</button>
   </div>
   <div class="button">
-    <input [(ngModel)]="userID" type="text" name="userID" placeholder="ID">
+    <input [(ngModel)]="userID" type="text" name="userID" placeholder="User ID">
     <button (click)="searchUserID()" class="btn btn-primary">Search by ID</button>
   </div>
   <div class="button">
     <input [(ngModel)]="uPolicies" type="text" name="userPols" placeholder="User Name">
-    <button (click)="seUspol()" class="btn btn-primary">Search policies list</button>
+    <button (click)="seUspol()" class="btn btn-primary">Search Policies list </button>
   </div>
   <div class="button">
     <input [(ngModel)]="policyId" type="text" name="policyId" placeholder="Policy ID">
-    <button (click)="seByPolId()" class="btn btn-primary" placeholder="ID">Search by policy ID</button>
+    <button (click)="seByPolId()" class="btn btn-primary">Search by Policy ID</button>
   </div>
 </div>
-<div class="container">
-  <div class="rBox" *ngIf="haveUser">
-    <p>
-      Name: {{user.name}}
-    </p>
-    <p>
-      ID: {{user.id}}
-    </p>
-    <p>
-      Role: {{user.role}}
-    </p>
-    <p>
-      Email: {{user.email}}
-    </p>
+<div class=results>
+  <div *ngIf="haveUser" class="usInfo">
+    <p>ID: {{user.id}} </p>
+    <p>Name: {{user.name}} </p>
+    <p>Role: {{user.role}} </p>
+    <p>Email: {{user.email}} </p>
   </div>
 
-  <div *ngIf="haveArray" class="policyList">
-    <div class="rBox" *ngFor="let element of arrayPol; index as i">
-
-      <p>
-        ID: {{element.id}}
-      </p>
-      <p>
-        Amount Insured: {{element.amountInsured}}
-      </p>
-      <p>
-        Email: {{element.email}}
-      </p>
-      <p>
-        Inception Date: {{element.inceptionDate}}
-      </p>
-      <p>
-        Installment Payment: {{element.installmentPayment}}
-      </p>
-      <p>
-        Client ID: {{element.clientId}}
-      </p>
+  <div *ngIf="haveArray" class="polList">
+    <div class="resultPol" *ngFor="let element of arrayPol; index as i">
+      <p>Email: {{element.email}}</p>
+      <p>Policy ID: {{element.id}}</p>
+      <p>Client ID: {{element.clientId}}</p>
+      <p>Amount Insured :{{element.amountInsured}}</p>
+      <p>Inception Date: {{element.inceptionDate}}</p>
+      <p>Installment Payment: {{element.installmentPayment}}</p>
     </div>
   </div>
 </div>

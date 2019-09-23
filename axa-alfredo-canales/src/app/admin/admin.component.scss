@@ -1,8 +1,43 @@
-.policyList{
-    margin:6px;
+body{
+    margin: 8px;
+}
+button{
+    padding: 12px 2px;
+    border-radius: 5px;
+    border: none;
+}
+.global{
+    display:flex;
+    width:100vw;
+    justify-content: space-around;
+}
+.button{
+    width: 250px;
     display: grid;
+    justify-content: center;
+    border:1px solid black;
+}
+.btn-primary, .btn-primary:hover, .btn-primary:active, .btn-primary:visited {
+    background-color: #00008f !important;
+}
+label,input,button{
+    margin: 6px 0;
+}
+
+.policyList{
+    margin: 6px;
+    display:grid;
     max-width: 450px;
     height: 500px;
     overflow: auto;
-    border: 1px solid black;
+  border:1px solid black;
 }
+.resultPol{
+    margin: 6px;
+}
+.results{
+    margin: 6px;
+    display:flex;
+    height: 600px;
+}
+

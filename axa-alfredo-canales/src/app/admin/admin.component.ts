@@ -18,7 +18,7 @@ export class AdminComponent implements OnInit {
   data: any;
   httpOptions;
   arrayPol;
-
+  failed= false;
   setAuthHeader() {
     return this.httpOptions = { headers: new HttpHeaders({ 'Authorization': `Bearer ${this.token}` }) }
   };
